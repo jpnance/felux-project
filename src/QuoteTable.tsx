@@ -40,7 +40,7 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFi
 	});
 
 	return (
-		<table>
+		<table className={styles.quoteTable}>
 			<thead>
 				<tr>
 					<th>Location</th>

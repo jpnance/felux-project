@@ -1,3 +1,22 @@
+.quoteTable {
+	border-collapse: collapse;
+}
+
+.quoteTable thead tr {
+	background-color: #ddd;
+}
+
+.quoteTable tbody tr:nth-child(even) {
+	background-color: #eee;
+}
+
+.quoteTable th,
+.quoteTable td {
+	border: 1px solid #ccc;
+	padding: 0.5rem;
+	white-space: nowrap;
+}
+
 .best {
 	background-color: lightGreen;
 	color: green;
