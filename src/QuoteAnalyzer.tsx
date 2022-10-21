@@ -1,4 +1,8 @@
 import partQuotes from './datasample.json';
+
+import { useState } from 'react';
+
+import PricingFieldSelector from './PricingFieldSelector';
 import QuoteTable from './QuoteTable';
 
 export interface QuoteItem {
@@ -17,6 +21,12 @@ export interface PartQuoteItem {
 };
 
 const QuoteAnalyzer = () => {
+	const [pricingFieldSelection, setPricingFieldSelection] = useState('FinalPrice'); 
+
+	let handlePricingFieldSelection = (value: string) => {
+		setPricingFieldSelection(value);
+	};
+
 	let companyColumns: string[] = [];
 
 	partQuotes.forEach((quoteItem) => {
@@ -28,7 +38,10 @@ const QuoteAnalyzer = () => {
 	});
 
 	return (
-		<QuoteTable partQuotes={partQuotes} companyColumns={companyColumns} />
+		<div>
+			<PricingFieldSelector handlePricingFieldSelection={handlePricingFieldSelection} />
+			<QuoteTable partQuotes={partQuotes} companyColumns={companyColumns} pricingFieldSelection={pricingFieldSelection} />
+		</div>
 	);
 };
 

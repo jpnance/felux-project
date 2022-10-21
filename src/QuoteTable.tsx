@@ -1,12 +1,13 @@
 import { FC } from 'react';
-import { PartQuoteItem } from './QuoteAnalyzer';
+import { PartQuoteItem, QuoteItem } from './QuoteAnalyzer';
 
 export interface QuoteTableProps {
 	partQuotes: PartQuoteItem[];
 	companyColumns: string[];
+	pricingFieldSelection: string;
 };
 
-const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns }) => {
+const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFieldSelection }) => {
 	return (
 		<table>
 			<thead>
@@ -15,7 +16,7 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns }) => {
 					<th>Part No.</th>
 					<th>Steel Product</th>
 					<th>Weight</th>
-					{companyColumns.map((companyColumn) => <th>{companyColumn}</th>)}
+					{companyColumns.map((companyColumn, i) => <th key={`quote-table-company-column-header-${i}`}>{companyColumn}</th>)}
 				</tr>
 			</thead>
 			<tbody>
@@ -25,7 +26,17 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns }) => {
 						<td>{partQuote.PartNo}</td>
 						<td>{partQuote.Product}</td>
 						<td>{partQuote.Weight}</td>
-						{companyColumns.map((companyColumn) => <td>{partQuote.Quotes.find((partQuote) => partQuote.Company === companyColumn)?.FinalPrice || ''}</td>)}
+						{companyColumns.map((companyColumn, i) => {
+							let quote = partQuote.Quotes.find((partQuoteQuote) => partQuoteQuote.Company === companyColumn);
+
+							let quoteText = '';
+
+							if (quote) {
+								quoteText = `$${(quote[pricingFieldSelection as keyof QuoteItem] as number).toFixed(2)}`;
+							}
+
+							return <td key={`quote-table-company-column-${i}`}>{quoteText}</td>
+						})}
 					</tr>
 				))}
 			</tbody>
