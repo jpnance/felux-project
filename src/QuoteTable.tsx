@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { PartQuoteItem, QuoteItem } from './QuoteAnalyzer';
+import { PricingFieldSelectorValue } from './PricingFieldSelector';
 
 export interface QuoteTableProps {
 	partQuotes: PartQuoteItem[];
 	companyColumns: string[];
-	pricingFieldSelection: string;
+	pricingFieldSelection: PricingFieldSelectorValue;
 };
 
 const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFieldSelection }) => {
@@ -32,7 +33,7 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFi
 							let quoteText = '';
 
 							if (quote) {
-								quoteText = `$${(quote[pricingFieldSelection as keyof QuoteItem] as number).toFixed(2)}`;
+								quoteText = `$${quote[pricingFieldSelection].toFixed(2)}`;
 							}
 
 							return <td key={`quote-table-company-column-${i}`}>{quoteText}</td>

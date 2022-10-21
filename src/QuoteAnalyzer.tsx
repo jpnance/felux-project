@@ -2,7 +2,7 @@ import partQuotes from './datasample.json';
 
 import { useState } from 'react';
 
-import PricingFieldSelector from './PricingFieldSelector';
+import PricingFieldSelector, { PricingFieldSelectorValue } from './PricingFieldSelector';
 import QuoteTable from './QuoteTable';
 
 export interface QuoteItem {
@@ -21,9 +21,9 @@ export interface PartQuoteItem {
 };
 
 const QuoteAnalyzer = () => {
-	const [pricingFieldSelection, setPricingFieldSelection] = useState('FinalPrice'); 
+	const [pricingFieldSelection, setPricingFieldSelection] = useState('FinalPrice' as PricingFieldSelectorValue);
 
-	let handlePricingFieldSelection = (value: string) => {
+	let handlePricingFieldSelection = (value: PricingFieldSelectorValue) => {
 		setPricingFieldSelection(value);
 	};
 
