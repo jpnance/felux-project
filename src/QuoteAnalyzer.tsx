@@ -68,6 +68,7 @@ const QuoteAnalyzer = () => {
 			<PricingFieldSelector handlePricingFieldSelection={handlePricingFieldSelection} />
 			<QuoteTable
 				partQuotes={partQuotes}
+				selectedPartQuotes={selectedPartQuotes}
 				companyColumns={companyColumns}
 				pricingFieldSelection={pricingFieldSelection}
 				handleQuoteSelection={handleQuoteSelection}

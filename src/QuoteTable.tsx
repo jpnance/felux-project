@@ -1,11 +1,12 @@
 import { FC } from 'react';
-import { PartQuoteItem, QuoteItem } from './QuoteAnalyzer';
+import { PartQuoteItem, QuoteItem, SelectedQuoteItem } from './QuoteAnalyzer';
 import { PricingFieldSelectorValue } from './PricingFieldSelector';
 
 import styles from './QuoteTable.module.css';
 
 export interface QuoteTableProps {
 	partQuotes: PartQuoteItem[];
+	selectedPartQuotes: SelectedQuoteItem[];
 	companyColumns: string[];
 	pricingFieldSelection: PricingFieldSelectorValue;
 	handleQuoteSelection: (partNumber: string, company: string, price: number, weight: number) => void;
@@ -16,7 +17,13 @@ type BestWorstQuote = {
 	price: number | undefined;
 };
 
-const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFieldSelection, handleQuoteSelection }) => {
+const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, selectedPartQuotes, companyColumns, pricingFieldSelection, handleQuoteSelection }) => {
+	let selectedQuoteMap = new Map<string, string>();
+
+	selectedPartQuotes.forEach((selectedPartQuote) => {
+		selectedQuoteMap.set(selectedPartQuote.partNumber, selectedPartQuote.company);
+	});
+
 	let bestPartQuotes = new Map<string, BestWorstQuote>();
 	let worstPartQuotes = new Map<string, BestWorstQuote>();
 
@@ -66,6 +73,7 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFi
 
 								let isBestQuote = false;
 								let isWorstQuote = false;
+								let isSelectedQuote = false;
 
 								let bestPartQuote = bestPartQuotes.get(partQuote.PartNo);
 								let worstPartQuote = worstPartQuotes.get(partQuote.PartNo);
@@ -78,12 +86,17 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFi
 									isWorstQuote = true;
 								}
 
+								if (selectedQuoteMap.get(partQuote.PartNo) === companyColumn) {
+									isSelectedQuote = true;
+								}
+
 								return (
 									<td
 										key={`quote-table-company-column-${i}`}
 										className={`${styles.quote} ${isBestQuote ? styles.best : null} ${isWorstQuote ? styles.worst : null}`}
 										onClick={(event) => handleQuoteSelection(partQuote.PartNo, companyColumn, quote?.FinalPrice || 0, partQuote.Weight)}
 									>
+										{isSelectedQuote ? '*' : ''}
 										{quoteText}
 									</td>
 								);
