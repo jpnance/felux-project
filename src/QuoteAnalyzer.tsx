@@ -2,6 +2,7 @@ import partQuotes from './datasample.json';
 
 import { useState } from 'react';
 
+import Kpis from './Kpis';
 import PricingFieldSelector, { PricingFieldSelectorValue } from './PricingFieldSelector';
 import QuoteTable from './QuoteTable';
 
@@ -63,6 +64,7 @@ const QuoteAnalyzer = () => {
 
 	return (
 		<div>
+			<Kpis selectedPartQuotes={selectedPartQuotes} />
 			<PricingFieldSelector handlePricingFieldSelection={handlePricingFieldSelection} />
 			<QuoteTable
 				partQuotes={partQuotes}

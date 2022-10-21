@@ -1,0 +1,8 @@
+.kpi {
+	background-color: #eee;
+	border: 1px solid #ddd;
+	display: inline-block;
+	padding: 0 1rem;
+	margin: 0.5rem;
+	text-align: center;
+}
