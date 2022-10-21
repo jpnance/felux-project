@@ -56,7 +56,7 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFi
 						<td>{partQuote.Location}</td>
 						<td>{partQuote.PartNo}</td>
 						<td>{partQuote.Product}</td>
-						<td>{partQuote.Weight}</td>
+						<td>{partQuote.Weight.toLocaleString('en-US')}</td>
 						{companyColumns.map((companyColumn, i) => {
 							let quote = partQuote.Quotes.find((partQuoteQuote) => partQuoteQuote.Company === companyColumn);
 
