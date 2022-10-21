@@ -30,3 +30,7 @@
 	background-color: pink;
 	color: red;
 }
+
+.selected {
+	font-weight: bold;
+}

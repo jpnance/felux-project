@@ -93,7 +93,7 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, selectedPartQuotes, compa
 								return (
 									<td
 										key={`quote-table-company-column-${i}`}
-										className={`${styles.quote} ${isBestQuote ? styles.best : null} ${isWorstQuote ? styles.worst : null}`}
+										className={`${styles.quote} ${isBestQuote ? styles.best : null} ${isWorstQuote ? styles.worst : null} ${isSelectedQuote ? styles.selected : null}`}
 										onClick={(event) => handleQuoteSelection(partQuote.PartNo, companyColumn, quote?.FinalPrice || 0, partQuote.Weight)}
 									>
 										{isSelectedQuote ? '*' : ''}
