@@ -8,6 +8,7 @@ export interface QuoteTableProps {
 	partQuotes: PartQuoteItem[];
 	companyColumns: string[];
 	pricingFieldSelection: PricingFieldSelectorValue;
+	handleQuoteSelection: (partNumber: string, company: string, price: number, weight: number) => void;
 };
 
 type BestWorstQuote = {
@@ -15,7 +16,7 @@ type BestWorstQuote = {
 	price: number | undefined;
 };
 
-const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFieldSelection }) => {
+const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFieldSelection, handleQuoteSelection }) => {
 	let bestPartQuotes = new Map<string, BestWorstQuote>();
 	let worstPartQuotes = new Map<string, BestWorstQuote>();
 
@@ -60,13 +61,11 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFi
 						{companyColumns.map((companyColumn, i) => {
 							let quote = partQuote.Quotes.find((partQuoteQuote) => partQuoteQuote.Company === companyColumn);
 
-							let isBestQuote = false;
-							let isWorstQuote = false;
+							if (quote && quote.FinalPrice) {
+								let quoteText = `$${quote[pricingFieldSelection].toFixed(2)}`;
 
-							let quoteText = '';
-
-							if (quote) {
-								quoteText = `$${quote[pricingFieldSelection].toFixed(2)}`;
+								let isBestQuote = false;
+								let isWorstQuote = false;
 
 								let bestPartQuote = bestPartQuotes.get(partQuote.PartNo);
 								let worstPartQuote = worstPartQuotes.get(partQuote.PartNo);
@@ -78,9 +77,20 @@ const QuoteTable: FC<QuoteTableProps> = ({ partQuotes, companyColumns, pricingFi
 								if (worstPartQuote?.company === companyColumn) {
 									isWorstQuote = true;
 								}
-							}
 
-							return <td key={`quote-table-company-column-${i}`} className={`${isBestQuote ? styles.best : null} ${isWorstQuote ? styles.worst : null}`}>{quoteText}</td>
+								return (
+									<td
+										key={`quote-table-company-column-${i}`}
+										className={`${styles.quote} ${isBestQuote ? styles.best : null} ${isWorstQuote ? styles.worst : null}`}
+										onClick={(event) => handleQuoteSelection(partQuote.PartNo, companyColumn, quote?.FinalPrice || 0, partQuote.Weight)}
+									>
+										{quoteText}
+									</td>
+								);
+							}
+							else {
+								return <td key={`quote-table-company-column-${i}`}></td>
+							}
 						})}
 					</tr>
 				))}

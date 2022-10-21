@@ -17,6 +17,10 @@
 	white-space: nowrap;
 }
 
+.quote {
+	cursor: pointer;
+}
+
 .best {
 	background-color: lightGreen;
 	color: green;
